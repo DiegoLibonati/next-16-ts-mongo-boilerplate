@@ -1,0 +1,31 @@
+.product-page {
+  padding: var(--spacing-md);
+}
+
+.product-page .title {
+  color: var(--color-white);
+  font-size: 5rem;
+}
+
+.product-page .description {
+  color: var(--color-white);
+  font-size: var(--font-size-lg);
+  margin-top: var(--spacing-sm);
+}
+
+.product-page .price {
+  color: var(--color-accent);
+  font-size: var(--font-size-xl);
+  margin-top: var(--spacing-sm);
+}
+
+.product-page .links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: var(--spacing-md);
+  width: 100%;
+  height: auto;
+  margin-top: var(--spacing-md);
+}

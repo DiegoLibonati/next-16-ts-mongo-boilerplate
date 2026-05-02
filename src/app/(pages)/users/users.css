@@ -1,0 +1,29 @@
+.users-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+}
+
+.users-page .title {
+  color: var(--color-white);
+  font-size: 5rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.users-page .users-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 75rem;
+}
+
+.users-page .error-message {
+  color: var(--color-error, #e74c3c);
+  font-size: var(--font-size-md);
+}
+
+.users-page .links {
+  margin-top: var(--spacing-xl);
+}

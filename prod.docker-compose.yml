@@ -1,0 +1,50 @@
+name: next-16-ts-boilerplate-prod
+
+services:
+  boilerplate-nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - boilerplate-app
+    networks:
+      - boilerplate-net
+
+  boilerplate-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    restart: always
+    env_file: .env
+    depends_on:
+      boilerplate-db:
+        condition: service_healthy
+    networks:
+      - boilerplate-net
+
+  boilerplate-db:
+    image: mongo:7.0
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME}
+    volumes:
+      - mongo-prod-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - boilerplate-net
+
+networks:
+  boilerplate-net:
+
+volumes:
+  mongo-prod-data:

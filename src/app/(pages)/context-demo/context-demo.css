@@ -1,0 +1,19 @@
+.context-page {
+  padding: var(--spacing-md);
+}
+
+.context-page .title {
+  color: var(--color-white);
+  font-size: 5rem;
+}
+
+.context-page .links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: var(--spacing-md);
+  width: 100%;
+  height: auto;
+  margin-top: var(--spacing-md);
+}

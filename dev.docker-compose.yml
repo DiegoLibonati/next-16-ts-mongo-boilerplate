@@ -1,0 +1,46 @@
+name: next-16-ts-boilerplate-dev
+
+services:
+  boilerplate-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - .:/home/app
+      - /home/app/node_modules
+      - /home/app/.next
+    ports:
+      - "3000:3000"
+    depends_on:
+      boilerplate-db:
+        condition: service_healthy
+    networks:
+      - boilerplate-net
+
+  boilerplate-db:
+    image: mongo:7.0
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME}
+    volumes:
+      - mongo-dev-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - boilerplate-net
+
+networks:
+  boilerplate-net:
+
+volumes:
+  mongo-dev-data:

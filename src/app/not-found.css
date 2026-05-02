@@ -1,0 +1,24 @@
+.not-found-page {
+  padding: var(--spacing-md);
+}
+
+.not-found-page .title {
+  color: var(--color-white);
+  font-size: 5rem;
+}
+
+.not-found-page .description {
+  color: var(--color-white);
+  font-size: var(--font-size-xl);
+  margin-top: var(--spacing-sm);
+}
+
+.not-found-page .links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin-top: var(--spacing-md);
+}

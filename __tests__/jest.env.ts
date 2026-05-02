@@ -1,7 +1,9 @@
-process.env.MONGO_HOST = "localhost";
-process.env.MONGO_PORT = "27018";
-process.env.MONGO_USER = "root";
-process.env.MONGO_PASS = "pass";
-process.env.MONGO_DB_NAME = "boilerplate_db";
-process.env.MONGO_AUTH_SOURCE = "admin";
-process.env.JWT_SECRET = "test-secret-key-for-jest";
+import { mockEnvs } from "@tests/__mocks__/envs.mock";
+
+process.env.MONGO_HOST = mockEnvs.MONGO_HOST;
+process.env.MONGO_PORT = mockEnvs.MONGO_PORT;
+process.env.MONGO_USER = mockEnvs.MONGO_USER;
+process.env.MONGO_PASS = mockEnvs.MONGO_PASS;
+process.env.MONGO_DB_NAME = mockEnvs.MONGO_DB_NAME;
+process.env.MONGO_AUTH_SOURCE = mockEnvs.MONGO_AUTH_SOURCE;
+process.env.JWT_SECRET = mockEnvs.JWT_SECRET;

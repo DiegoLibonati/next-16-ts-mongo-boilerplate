@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import type { JSX } from "react";
 
-import { authService } from "@/services/authService";
+import authService from "@/services/authService";
 
 import "@/components/LoginForm/LoginForm.css";
 

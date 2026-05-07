@@ -3,7 +3,7 @@ import type { ResponseWithData } from "@/types/responses";
 
 const BASE = "/api/v1/users";
 
-export const userService = {
+const userService = {
   async getAll(): Promise<ResponseWithData<IUser[]>> {
     const response = await fetch(BASE);
 
@@ -20,3 +20,5 @@ export const userService = {
     return (await response.json()) as ResponseWithData<IUser>;
   },
 };
+
+export default userService;

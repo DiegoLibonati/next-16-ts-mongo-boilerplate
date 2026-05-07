@@ -2,7 +2,7 @@ import type { DefaultResponse } from "@/types/responses";
 
 const BASE = "/api/v1/auth";
 
-export const authService = {
+const authService = {
   async login(email: string, password: string): Promise<DefaultResponse> {
     const response = await fetch(`${BASE}/login`, {
       method: "POST",
@@ -29,3 +29,5 @@ export const authService = {
     return (await response.json()) as DefaultResponse;
   },
 };
+
+export default authService;

@@ -1,7 +1,7 @@
 import type { IProduct } from "@/types/models";
 import type { ResponseWithData } from "@/types/responses";
 
-import { productService } from "@/services/productService";
+import productService from "@/services/productService";
 
 import { mockFetchError, mockFetchSuccess } from "@tests/__mocks__/fetch.mock";
 import { mockProduct, mockProducts } from "@tests/__mocks__/product.mock";

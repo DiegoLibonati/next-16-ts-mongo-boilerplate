@@ -3,7 +3,7 @@
 import type { JSX } from "react";
 import { useRouter } from "next/navigation";
 
-import { authService } from "@/services/authService";
+import authService from "@/services/authService";
 
 import Action from "@/components/Action/Action";
 

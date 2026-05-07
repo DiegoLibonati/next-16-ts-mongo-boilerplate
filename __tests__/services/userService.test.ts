@@ -1,7 +1,7 @@
 import type { IUser } from "@/types/models";
 import type { ResponseWithData } from "@/types/responses";
 
-import { userService } from "@/services/userService";
+import userService from "@/services/userService";
 
 import { mockFetchError, mockFetchSuccess } from "@tests/__mocks__/fetch.mock";
 import { mockUser, mockUsers } from "@tests/__mocks__/user.mock";

@@ -6,14 +6,15 @@ import type { RenderResult } from "@testing-library/react";
 
 import LoginForm from "@/components/LoginForm/LoginForm";
 
-import { authService } from "@/services/authService";
+import authService from "@/services/authService";
 
 let mockPush: jest.Mock;
 let mockRefresh: jest.Mock;
 
 jest.mock("next/navigation", () => ({ useRouter: jest.fn() }));
 jest.mock("@/services/authService", () => ({
-  authService: { login: jest.fn(), logout: jest.fn() },
+  __esModule: true,
+  default: { login: jest.fn(), logout: jest.fn() },
 }));
 
 const renderComponent = (): RenderResult => render(<LoginForm />);

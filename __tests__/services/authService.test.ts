@@ -1,6 +1,6 @@
 import type { DefaultResponse } from "@/types/responses";
 
-import { authService } from "@/services/authService";
+import authService from "@/services/authService";
 
 import { mockFetchSuccess } from "@tests/__mocks__/fetch.mock";
 

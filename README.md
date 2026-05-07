@@ -155,6 +155,10 @@ The application will be available at `http://localhost:3000`.
 | `npm run format:check`  | Check code formatting                |
 | `npm run format:all`    | Format Prettier (src + tests)        |
 
+## Portfolio Link
+
+[`https://www.diegolibonati.com.ar/#/project/next-16-ts-mongo-boilerplate`](https://www.diegolibonati.com.ar/#/project/next-16-ts-mongo-boilerplate)
+
 ## Testing
 
 1. Navigate to the project folder

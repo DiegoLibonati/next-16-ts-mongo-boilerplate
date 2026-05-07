@@ -4,11 +4,13 @@ import type { NextRequest } from "next/server";
 
 import { getEnvs } from "@/server/configs/env.config";
 
+import { AuthService } from "@/server/services/auth.service";
+
+import { getExceptionMessage } from "@/server/helpers/get_exception_message.helper";
+
 import { CODES_ERROR, CODES_SUCCESS } from "@/server/constants/codes.constant";
 import { MESSAGES_ERROR, MESSAGES_SUCCESS } from "@/server/constants/messages.constant";
 import { COOKIE_MAX_AGE, COOKIE_NAME } from "@/server/constants/vars.constant";
-
-import { AuthService } from "@/server/services/auth.service";
 
 export const AuthController = {
   async login(req: NextRequest): Promise<NextResponse> {
@@ -46,10 +48,8 @@ export const AuthController = {
       return response;
     } catch (error) {
       console.error("AuthController.login", error);
-      return NextResponse.json(
-        { code: CODES_ERROR.generic, message: MESSAGES_ERROR.generic },
-        { status: 500 }
-      );
+      const { status, ...response } = getExceptionMessage(error);
+      return NextResponse.json(response, { status: status });
     }
   },
 

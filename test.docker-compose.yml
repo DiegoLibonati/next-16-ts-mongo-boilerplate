@@ -1,4 +1,4 @@
-name: next-16-ts-boilerplate-test
+name: next-16-ts-mongo-boilerplate-test
 
 services:
   test-db:

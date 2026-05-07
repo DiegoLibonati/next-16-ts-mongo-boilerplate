@@ -6,12 +6,12 @@ describe("manifest", () => {
   describe("when called", () => {
     it("should return the correct app name", () => {
       const result: MetadataRoute.Manifest = manifest();
-      expect(result.name).toBe("Next 16 TS Boilerplate");
+      expect(result.name).toBe("Next 16 TS Mongo Boilerplate");
     });
 
     it("should return the correct short name", () => {
       const result: MetadataRoute.Manifest = manifest();
-      expect(result.short_name).toBe("Next16TS");
+      expect(result.short_name).toBe("Next16TSMongo");
     });
 
     it("should return standalone display mode", () => {

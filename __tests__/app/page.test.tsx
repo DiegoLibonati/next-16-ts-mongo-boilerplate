@@ -34,7 +34,9 @@ describe("page", () => {
 
     it("should render the app heading", async () => {
       await renderPage();
-      expect(screen.getByRole("heading", { name: "Next 16 TS Boilerplate" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Next 16 TS Mongo Boilerplate" })
+      ).toBeInTheDocument();
     });
 
     it("should render the About navigation link", async () => {
@@ -78,7 +80,9 @@ describe("page", () => {
 
     it("should render the app heading", async () => {
       await renderPage();
-      expect(screen.getByRole("heading", { name: "Next 16 TS Boilerplate" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Next 16 TS Mongo Boilerplate" })
+      ).toBeInTheDocument();
     });
 
     it("should not render navigation links", async () => {

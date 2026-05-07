@@ -1,4 +1,4 @@
-# Next 16 Ts Boilerplate
+# Next 16 Ts Mongo Boilerplate
 
 ## Educational Purpose
 
@@ -57,7 +57,7 @@ The application will be available at `http://localhost:3000`.
 
 ## Description
 
-**Next 16 Ts Boilerplate** is a production-ready starting point for building full-stack web applications with Next.js, TypeScript, and MongoDB. It is not a UI kit or a framework — it is the foundation you clone once and stop rebuilding from scratch on every new project.
+**Next 16 Ts Mongo Boilerplate** is a production-ready starting point for building full-stack web applications with Next.js, TypeScript, and MongoDB. It is not a UI kit or a framework — it is the foundation you clone once and stop rebuilding from scratch on every new project.
 
 **The problem it solves:** every Next.js + TypeScript project starts with the same repetitive decisions — how to structure a full-stack codebase, how to separate server logic from client logic, where to put types, how to handle authentication, how to connect to a database safely, and how to deploy the whole thing with Docker and nginx. This boilerplate answers all of those decisions upfront, with a consistent, layered architecture that scales to real applications without introducing unnecessary complexity.
 
@@ -261,7 +261,7 @@ NEXT_REDIRECT_IF_ROUTE_NOT_EXISTS=false
 ## Project Structure
 
 ```
-next-16-ts-boilerplate/
+next-16-ts-mongo-boilerplate/
 ├── __tests__/                          # Test suite
 │   ├── __mocks__/                      # Shared mock data and module mocks
 │   ├── jest.globalSetup.ts             # Global setup (runs once before all tests)

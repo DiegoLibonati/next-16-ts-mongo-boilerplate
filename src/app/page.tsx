@@ -17,7 +17,7 @@ export default async function HomePage(): Promise<JSX.Element> {
 
   return (
     <main className="home-page">
-      <h1 className="title">Next 16 TS Boilerplate</h1>
+      <h1 className="title">Next 16 TS Mongo Boilerplate</h1>
       {isLoggedIn ? (
         <>
           <nav className="links">

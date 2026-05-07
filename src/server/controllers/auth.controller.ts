@@ -20,7 +20,7 @@ export const AuthController = {
 
       if (!email || !password) {
         return NextResponse.json(
-          { code: CODES_ERROR.generic, message: "Email and password are required." },
+          { code: CODES_ERROR.requiredFields, message: MESSAGES_ERROR.requiredFields },
           { status: 400 }
         );
       }

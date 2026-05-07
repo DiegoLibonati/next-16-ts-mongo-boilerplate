@@ -20,4 +20,5 @@ export const MESSAGES_ERROR: MessagesError = {
   generic: "Something went wrong.",
   unauthorized: "Unauthorized.",
   invalidCredentials: "Invalid credentials.",
+  requiredFields: "Email and password are required.",
 };

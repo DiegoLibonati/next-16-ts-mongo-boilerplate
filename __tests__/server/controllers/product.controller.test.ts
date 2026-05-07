@@ -90,10 +90,11 @@ describe("product.controller", () => {
         const req = buildGetRequest("/api/v1/products/nonexistent-id");
 
         const response = await ProductController.getById(req, "nonexistent-id");
-        const body: { error: string } = await response.json();
+        const body: { code: string; message: string } = await response.json();
 
         expect(response.status).toBe(404);
-        expect(body.error).toBe("Product not found");
+        expect(body.code).toBe("NOT_FOUND_PRODUCT");
+        expect(body.message).toBe("Product not found.");
       });
     });
 

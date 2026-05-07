@@ -20,4 +20,5 @@ export const CODES_ERROR: CodesError = {
   generic: "ERROR_GENERIC",
   unauthorized: "ERROR_UNAUTHORIZED",
   invalidCredentials: "ERROR_INVALID_CREDENTIALS",
+  requiredFields: "ERROR_REQUIRED_FIELDS",
 };

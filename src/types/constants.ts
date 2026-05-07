@@ -18,6 +18,7 @@ export interface CodesError {
   generic: "ERROR_GENERIC";
   unauthorized: "ERROR_UNAUTHORIZED";
   invalidCredentials: "ERROR_INVALID_CREDENTIALS";
+  requiredFields: "ERROR_REQUIRED_FIELDS";
 }
 
 export interface MessagesSuccess {
@@ -40,4 +41,5 @@ export interface MessagesError {
   generic: string;
   unauthorized: string;
   invalidCredentials: string;
+  requiredFields: string;
 }

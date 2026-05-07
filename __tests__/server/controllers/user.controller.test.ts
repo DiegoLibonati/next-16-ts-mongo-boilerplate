@@ -90,10 +90,11 @@ describe("user.controller", () => {
         const req = buildGetRequest("/api/v1/users/nonexistent-id");
 
         const response = await UserController.getById(req, "nonexistent-id");
-        const body: { error: string } = await response.json();
+        const body: { code: string; message: string } = await response.json();
 
         expect(response.status).toBe(404);
-        expect(body.error).toBe("User not found");
+        expect(body.code).toBe("NOT_FOUND_USER");
+        expect(body.message).toBe("User not found.");
       });
     });
 

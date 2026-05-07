@@ -1,5 +1,5 @@
 import type { Document } from "mongoose";
-import type { IProduct, IUser } from "@/types/models";
+import type { Product, User } from "@/types/app";
 
 export interface Session {
   sub: string;
@@ -7,12 +7,12 @@ export interface Session {
 }
 
 export type IProductDoc = Document &
-  Omit<IProduct, "_id" | "createdAt" | "updatedAt"> & {
+  Product & {
     createdAt: Date;
     updatedAt: Date;
   };
 
-export interface IUserDoc extends Document, Omit<IUser, "_id" | "createdAt" | "updatedAt"> {
+export interface IUserDoc extends Document, User {
   password: string;
   createdAt: Date;
   updatedAt: Date;

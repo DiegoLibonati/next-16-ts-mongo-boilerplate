@@ -5,7 +5,7 @@
 import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
-import type { Session } from "@/types/helpers";
+import type { Session } from "@/types/api";
 
 import { getEnvs } from "@/server/configs/env.config";
 

@@ -1,4 +1,4 @@
-import type { MessagesError, MessagesNot, MessagesSuccess } from "@/types/constants";
+import type { MessagesError, MessagesNot, MessagesSuccess } from "@/types/api";
 
 export const MESSAGES_SUCCESS: MessagesSuccess = {
   getAllUsers: "Users successfully retrieved.",

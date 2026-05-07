@@ -4,7 +4,7 @@
 
 import mongoose from "mongoose";
 
-import type { ExceptionInfo } from "@/types/helpers";
+import type { ExceptionInfo } from "@/types/api";
 
 import { getExceptionMessage } from "@/server/helpers/get_exception_message.helper";
 

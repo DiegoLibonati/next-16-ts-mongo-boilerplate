@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import type { ExceptionInfo } from "@/types/helpers";
+import type { ExceptionInfo } from "@/types/api";
 
 import { CODES_ERROR, CODES_NOT } from "@/server/constants/codes.constant";
 import { MESSAGES_ERROR, MESSAGES_NOT } from "@/server/constants/messages.constant";

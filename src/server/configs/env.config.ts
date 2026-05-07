@@ -1,4 +1,4 @@
-import type { Envs } from "@/types/env";
+import type { Envs } from "@/types/api";
 
 import { requireEnv } from "@/server/helpers/require_env.helper";
 

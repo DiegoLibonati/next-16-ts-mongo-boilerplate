@@ -1,4 +1,4 @@
-import type { CodesError, CodesNot, CodesSuccess } from "@/types/constants";
+import type { CodesError, CodesNot, CodesSuccess } from "@/types/api";
 
 export const CODES_SUCCESS: CodesSuccess = {
   getAllUsers: "SUCCESS_GET_ALL_USERS",

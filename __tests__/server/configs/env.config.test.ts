@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import type { Envs } from "@/types/env";
+import type { Envs } from "@/types/api";
 
 describe("env.config", () => {
   const originalEnv: NodeJS.ProcessEnv = process.env;

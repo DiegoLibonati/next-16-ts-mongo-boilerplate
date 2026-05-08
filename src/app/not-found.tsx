@@ -6,7 +6,7 @@ import Link from "@/components/Link/Link";
 
 import "@/app/not-found.css";
 
-export default function NotFound(): JSX.Element {
+function NotFound(): JSX.Element {
   if (process.env.NEXT_REDIRECT_IF_ROUTE_NOT_EXISTS === "true") {
     redirect("/");
   }
@@ -21,3 +21,5 @@ export default function NotFound(): JSX.Element {
     </main>
   );
 }
+
+export default NotFound;

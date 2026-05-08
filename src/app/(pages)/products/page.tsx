@@ -13,7 +13,7 @@ import "@/app/(pages)/products/products.css";
 
 export const metadata: Metadata = { title: "Products" };
 
-export default async function ProductsPage(): Promise<JSX.Element> {
+async function ProductsPage(): Promise<JSX.Element> {
   const session = await getSession();
   if (!session) redirect("/login");
 
@@ -51,3 +51,5 @@ export default async function ProductsPage(): Promise<JSX.Element> {
     </main>
   );
 }
+
+export default ProductsPage;

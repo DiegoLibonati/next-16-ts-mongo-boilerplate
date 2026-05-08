@@ -1,6 +1,5 @@
-import type { Metadata } from "next";
-
 import type { JSX } from "react";
+import type { Metadata } from "next";
 
 import { getSession } from "@/server/helpers/get_session.helper";
 
@@ -11,7 +10,7 @@ import "@/app/home.css";
 
 export const metadata: Metadata = { title: "Home" };
 
-export default async function HomePage(): Promise<JSX.Element> {
+async function HomePage(): Promise<JSX.Element> {
   const session = await getSession();
   const isLoggedIn = session !== null;
 
@@ -46,3 +45,5 @@ export default async function HomePage(): Promise<JSX.Element> {
     </main>
   );
 }
+
+export default HomePage;

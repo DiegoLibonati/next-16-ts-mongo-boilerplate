@@ -7,7 +7,7 @@ import "@/app/(pages)/about/about.css";
 
 export const metadata: Metadata = { title: "About" };
 
-export default function AboutPage(): JSX.Element {
+function AboutPage(): JSX.Element {
   return (
     <main className="about-page">
       <h1 className="title">About</h1>
@@ -17,3 +17,5 @@ export default function AboutPage(): JSX.Element {
     </main>
   );
 }
+
+export default AboutPage;

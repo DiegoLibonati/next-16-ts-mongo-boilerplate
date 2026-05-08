@@ -14,7 +14,7 @@ import "@/app/(pages)/users/users.css";
 
 export const metadata: Metadata = { title: "Users" };
 
-export default async function UsersPage(): Promise<JSX.Element> {
+async function UsersPage(): Promise<JSX.Element> {
   const session = await getSession();
   if (!session) redirect("/login");
 
@@ -51,3 +51,5 @@ export default async function UsersPage(): Promise<JSX.Element> {
     </main>
   );
 }
+
+export default UsersPage;

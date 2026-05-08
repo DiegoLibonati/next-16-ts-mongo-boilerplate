@@ -11,7 +11,7 @@ import "@/app/(pages)/login/login.css";
 
 export const metadata: Metadata = { title: "Login" };
 
-export default async function LoginPage(): Promise<JSX.Element> {
+async function LoginPage(): Promise<JSX.Element> {
   const session = await getSession();
   if (session) redirect("/");
 
@@ -23,3 +23,5 @@ export default async function LoginPage(): Promise<JSX.Element> {
     </main>
   );
 }
+
+export default LoginPage;

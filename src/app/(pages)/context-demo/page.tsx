@@ -8,7 +8,7 @@ import "@/app/(pages)/context-demo/context-demo.css";
 
 export const metadata: Metadata = { title: "Context Demo" };
 
-export default function ContextPage(): JSX.Element {
+function ContextPage(): JSX.Element {
   return (
     <main className="context-page">
       <h1 className="title">Context Demo</h1>
@@ -19,3 +19,5 @@ export default function ContextPage(): JSX.Element {
     </main>
   );
 }
+
+export default ContextPage;

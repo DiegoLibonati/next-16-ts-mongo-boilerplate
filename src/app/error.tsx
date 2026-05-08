@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import type { JSX } from "react";
 import type { ErrorPageProps } from "@/types/props";
 
-export default function ErrorPage({ error, reset }: ErrorPageProps): JSX.Element {
+function ErrorPage({ error, reset }: ErrorPageProps): JSX.Element {
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -18,3 +18,5 @@ export default function ErrorPage({ error, reset }: ErrorPageProps): JSX.Element
     </main>
   );
 }
+
+export default ErrorPage;

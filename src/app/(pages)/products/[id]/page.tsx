@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 }
 
-export default async function ProductPage({ params }: ProductPageProps): Promise<JSX.Element> {
+async function ProductPage({ params }: ProductPageProps): Promise<JSX.Element> {
   const session = await getSession();
   if (!session) redirect("/login");
 
@@ -59,3 +59,5 @@ export default async function ProductPage({ params }: ProductPageProps): Promise
     </main>
   );
 }
+
+export default ProductPage;

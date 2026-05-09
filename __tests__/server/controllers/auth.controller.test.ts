@@ -105,6 +105,12 @@ describe("auth.controller", () => {
     });
 
     describe("when an unexpected error occurs", () => {
+      beforeEach(() => {
+        jest.spyOn(console, "error").mockImplementation(() => {
+          // Empty fn
+        });
+      });
+
       it("should return 500 with generic error code", async () => {
         (AuthService.login as jest.Mock).mockRejectedValue(new Error("DB error"));
         const req = buildLoginRequest({ email: "alice@example.com", password: "pass123" });

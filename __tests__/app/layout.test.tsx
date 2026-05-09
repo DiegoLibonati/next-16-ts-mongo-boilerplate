@@ -11,6 +11,12 @@ const renderLayout = (
 };
 
 describe("layout", () => {
+  beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {
+      // Empty fn
+    });
+  });
+
   describe("rendering", () => {
     it("should render the children", () => {
       renderLayout();

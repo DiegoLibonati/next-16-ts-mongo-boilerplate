@@ -48,6 +48,12 @@ describe("product.controller", () => {
     });
 
     describe("when service throws an error", () => {
+      beforeEach(() => {
+        jest.spyOn(console, "error").mockImplementation(() => {
+          // Empty fn
+        });
+      });
+
       it("should return 500 with ERROR_GENERIC code", async () => {
         (ProductService.getAllProducts as jest.Mock).mockRejectedValue(new Error("DB failure"));
         const req = buildGetRequest("/api/v1/products");
@@ -99,6 +105,12 @@ describe("product.controller", () => {
     });
 
     describe("when service throws an error", () => {
+      beforeEach(() => {
+        jest.spyOn(console, "error").mockImplementation(() => {
+          // Empty fn
+        });
+      });
+
       it("should return 500 with ERROR_GENERIC code on generic error", async () => {
         (ProductService.getProductById as jest.Mock).mockRejectedValue(new Error("unexpected"));
         const req = buildGetRequest("/api/v1/products/some-id");

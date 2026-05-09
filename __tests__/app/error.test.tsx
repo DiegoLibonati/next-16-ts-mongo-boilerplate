@@ -18,6 +18,12 @@ const renderComponent = (props: Partial<ErrorPageProps> = {}): RenderResult => {
 };
 
 describe("error", () => {
+  beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {
+      // Empty fn
+    });
+  });
+
   describe("rendering", () => {
     it("should render the error heading", () => {
       renderComponent();

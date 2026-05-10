@@ -6,55 +6,6 @@ This project was created primarily for **educational and learning purposes**.
 While it is well-structured and could technically be used in production, it is **not intended for commercialization**.  
 The main goal is to explore and demonstrate best practices, patterns, and technologies in software development.
 
-## Getting Started
-
-### Prerequisites
-
-- [Node.js 20+](https://nodejs.org/)
-- [Docker](https://www.docker.com/) (optional, required for Docker setup)
-
-### Environment variables
-
-Copy `.env.example` to `.env` and fill in the values:
-
-```bash
-cp .env.example .env
-```
-
----
-
-### Without Docker
-
-> Requires a running MongoDB instance. Update `MONGO_HOST`, `MONGO_PORT`, and credentials in `.env` to point to it.
-
-1. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-The application will be available at `http://localhost:3000`.
-
----
-
-### With Docker
-
-> MongoDB is included as a container — no local installation needed.
-
-1. Build and start all services:
-   ```bash
-   docker compose -f dev.docker-compose.yml up --build
-   ```
-
-The application will be available at `http://localhost:3000`.
-
-> **WSL2 users:** Uncomment `WATCHPACK_POLLING=true` in `.env` if hot reload is not working.
-
 ## Description
 
 **Next 16 Ts Mongo Boilerplate** is a production-ready starting point for building full-stack web applications with Next.js, TypeScript, and MongoDB. It is not a UI kit or a framework — it is the foundation you clone once and stop rebuilding from scratch on every new project.
@@ -65,7 +16,7 @@ The application will be available at `http://localhost:3000`.
 
 - **Next.js 16 + React 19 + TypeScript 5** — App Router with Turbopack for local development and optimized standalone builds for production. Strict typing enforced throughout; no `any`, consistent type imports, explicit return types required.
 - **MongoDB + Mongoose** — connection managed with a global cache safe for Next.js hot-reload. Includes a seed mechanism that populates the database on first run.
-- **JWT authentication** — cookie-based auth with `HttpOnly` cookies, JWT signed and verified with `jose`, password hashing with `bcryptjs`. Session reading via a `getSession()` server helper usable in any Server Component or API route.
+- **Cookie-based JWT authentication** — full session model documented in [Architecture & Design Patterns](#architecture--design-patterns).
 - **Layered server architecture** — each domain (users, products, auth) has a Model, a DAO (data access), a Service (business logic), and a Controller (request handling). API routes are thin delegators that call the controller and nothing else.
 - **Frontend service layer** — plain async modules in `src/services/` that wrap `fetch`, throw typed errors on non-ok responses, and keep all API communication out of Client Components.
 - **Context + Provider + custom hook pattern** — demonstrated with a counter feature showing how to scope a provider to a specific route, enforce provider usage at the type level, and expose a clean hook API without prop-drilling.
@@ -137,104 +88,94 @@ The application will be available at `http://localhost:3000`.
 "typescript-eslint": "^8.0.0"
 ```
 
-## Available Scripts
+## Getting Started
 
-| Command                 | Description                          |
-| ----------------------- | ------------------------------------ |
-| `npm run dev`           | Start development server (Turbopack) |
-| `npm run dev:docker`    | Start development server (webpack)   |
-| `npm run build`         | Type-check and build for production  |
-| `npm run start`         | Start production server              |
-| `npm run test`          | Run tests                            |
-| `npm run test:watch`    | Run tests in watch mode              |
-| `npm run test:coverage` | Run tests with coverage              |
-| `npm run lint`          | Check for linting errors             |
-| `npm run lint:fix`      | Fix linting errors                   |
-| `npm run lint:all`      | Fix linting errors (src + tests)     |
-| `npm run format`        | Format code with Prettier            |
-| `npm run format:check`  | Check code formatting                |
-| `npm run format:all`    | Format Prettier (src + tests)        |
+### Prerequisites
 
-## Portfolio Link
+- [Node.js 22+](https://nodejs.org/) (the `engines` field in `package.json` enforces this)
+- A running MongoDB instance — either a local install, MongoDB Atlas, or the bundled [Dev Docker environment](#dev-docker-environment) under Production
 
-[`https://www.diegolibonati.com.ar/#/project/next-16-ts-mongo-boilerplate`](https://www.diegolibonati.com.ar/#/project/next-16-ts-mongo-boilerplate)
+### Steps
 
-## Testing
+1. Install dependencies:
 
-1. Navigate to the project folder
-2. Execute: `npm test`
+   ```bash
+   npm install
+   ```
 
-For coverage report:
+2. Copy the environment template and fill in the values (see [Env Keys](#env-keys) for the full reference):
 
-```bash
-npm run test:coverage
-```
+   ```bash
+   cp .env.example .env
+   ```
 
-## Production
+3. Start the development server:
 
-The production setup runs three containers orchestrated by `prod.docker-compose.yml`:
+   ```bash
+   npm run dev
+   ```
 
-| Container           | Image                   | Role                                      |
-| ------------------- | ----------------------- | ----------------------------------------- |
-| `boilerplate-nginx` | `nginx:stable-alpine`   | Reverse proxy, public entry point (8080)  |
-| `boilerplate-app`   | `Dockerfile.production` | Next.js standalone server (internal only) |
-| `boilerplate-db`    | `mongo:7.0`             | MongoDB database (internal only)          |
+The application will be available at `http://localhost:3000`.
 
-Only nginx is exposed to the outside. The app and database containers are internal to the Docker network.
+> Prefer a fully containerized dev workflow with MongoDB included? See [Dev Docker environment](#dev-docker-environment).
 
-### Environment variables
+### Pre-Commit for Development
 
-Make sure `.env` is set up before deploying. The values used in production differ from development:
+The project enforces code quality at commit time so no formatter or linter step is ever manual.
 
-```env
-MONGO_HOST=boilerplate-db        # must match the db service name in docker-compose
-MONGO_PORT=27017
-MONGO_USER=root
-MONGO_PASS=<strong-password>
-MONGO_DB_NAME=boilerplate_db
-MONGO_AUTH_SOURCE=admin
-JWT_SECRET=<long-random-secret>
-NEXT_PUBLIC_APP_URL=https://yourdomain.com
-```
+#### ESLint
 
-> Never commit `.env` to version control. Use `.env.example` as the reference template.
+Configured with TypeScript strict rules (`typescript-eslint` recommended + strictTypeChecked + stylisticTypeChecked) and Next.js core web vitals rules:
 
-### Deploy
+- Explicit return types required on all functions
+- No `any` type allowed (relaxed inside `__tests__/`)
+- Consistent type imports enforced (`import type`)
+- No unused variables (leading `_` exempted)
+- `interface` preferred over `type` for object shapes
+- `===` required, no `var`, `prefer-const`
+- `no-console` warned, `no-debugger` blocked
+- React hooks rules enforced
+- Prettier formatting applied as an ESLint error
+
+Manual commands:
 
 ```bash
-docker compose -f prod.docker-compose.yml up --build -d
+npm run lint        # check src/
+npm run lint:fix    # auto-fix src/
+npm run lint:all    # auto-fix src/ + __tests__/
 ```
 
-The application will be available at `http://localhost:8080` (or your server's IP/domain on port 8080).
+#### Prettier
 
-### How it works
+Automatic code formatting on save and on commit:
 
-- **`Dockerfile.production`** uses a three-stage build: `deps` installs packages with `npm ci`, `builder` runs `tsc` + `next build`, and `runner` copies only the standalone output — resulting in a minimal final image.
-- **`Dockerfile.nginx`** runs as a non-root user (`appuser`). The `user nginx;` directive is removed from the main nginx config so it can bind to port 8080 without root privileges.
-- **nginx** proxies all traffic to the app container. Static assets under `/_next/static/` are cached for 1 year (immutable). Images and fonts are cached for 1 day. HTML responses are never cached.
-- **MongoDB** starts with a health check; the app container waits until the database is ready before starting (`depends_on: condition: service_healthy`).
-- **Data** is persisted in the `mongo-prod-data` named volume — it survives container restarts and rebuilds.
+- 2 spaces indentation
+- Semicolons required
+- Double quotes
+- Trailing commas (ES5)
+- Print width: 100 characters
+- Arrow function parentheses always included
+- LF line endings
 
-### Useful commands
+Manual commands:
 
 ```bash
-# View running containers
-docker compose -f prod.docker-compose.yml ps
-
-# Follow logs
-docker compose -f prod.docker-compose.yml logs -f
-
-# Stop all services
-docker compose -f prod.docker-compose.yml down
-
-# Stop and remove volumes (wipes the database)
-docker compose -f prod.docker-compose.yml down -v
-
-# Rebuild after code changes
-docker compose -f prod.docker-compose.yml up --build --force-recreate -d
+npm run format        # format src/
+npm run format:check  # verify formatting in src/
+npm run format:all    # format src/ + __tests__/
 ```
+
+#### Husky + lint-staged
+
+The `prepare` script installs Husky on `npm install`. The pre-commit hook runs `lint-staged`, which:
+
+- Runs ESLint with auto-fix on staged `.ts` and `.tsx` files
+- Formats staged `.ts`, `.tsx`, `.css`, `.json`, and `.md` files with Prettier
+- Blocks the commit if linting errors remain after auto-fix
 
 ## Env Keys
+
+The `.env` file referenced in [Getting Started](#getting-started) is parsed and validated at runtime by `src/server/configs/env.config.ts`. The full set of supported keys is listed below.
 
 | Key                                 | Description                                                                          |
 | ----------------------------------- | ------------------------------------------------------------------------------------ |
@@ -249,6 +190,8 @@ docker compose -f prod.docker-compose.yml up --build --force-recreate -d
 | `NEXT_REDIRECT_IF_ROUTE_NOT_EXISTS` | If `true`, redirects to home when a route doesn't exist. If `false`, shows 404 page. |
 | `WATCHPACK_POLLING`                 | Set to `true` to enable polling-based file watching. Required on some WSL2 setups.   |
 
+Reference values for local development:
+
 ```bash
 MONGO_HOST=boilerplate-db
 MONGO_PORT=27017
@@ -261,6 +204,8 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_REDIRECT_IF_ROUTE_NOT_EXISTS=false
 # WATCHPACK_POLLING=true
 ```
+
+> Never commit `.env` to version control. Use `.env.example` as the reference template. Production-specific values are documented in [Configure `.env` for production](#configure-env-for-production).
 
 ## Project Structure
 
@@ -440,65 +385,148 @@ The MongoDB connection uses a `global._mongooseCache` object to persist the conn
 **Centralized Error Mapping**
 `getExceptionMessage()` maps any thrown value — Mongoose `CastError`, `ValidationError`, or unknown — to a consistent `{ status, code, message }` shape. Controllers call this helper in their catch blocks, so error response formatting is never duplicated across routes.
 
-## Code Quality Tools
+**Authentication & Session Model**
+Cookie-based JWT authentication implemented in `src/server/services/auth.service.ts` and consumed via `src/server/helpers/get_session.helper.ts`:
 
-### ESLint
+- Passwords are hashed with `bcryptjs` before being stored — plain text passwords never reach the database.
+- JWT tokens are signed and verified with `jose` using the secret defined in `JWT_SECRET`. Tokens are stored in an `auth-token` `HttpOnly` cookie, making them inaccessible to JavaScript in the browser and mitigating XSS-driven token exfiltration.
+- The cookie is set with `Secure` in production and `SameSite=Lax` to mitigate CSRF attacks.
+- `getSession()` is the single entry point for reading the current user — usable in any Server Component or API route. An invalid or expired token returns `null`; no exceptions propagate to the caller.
 
-Configured with TypeScript strict rules (`typescript-eslint` recommended + strictTypeChecked + stylisticTypeChecked) and Next.js core web vitals rules:
+## Testing
 
-- Explicit return types required on all functions
-- No `any` type allowed (relaxed inside `__tests__/`)
-- Consistent type imports enforced (`import type`)
-- No unused variables (leading `_` exempted)
-- `interface` preferred over `type` for object shapes
-- `===` required, no `var`, `prefer-const`
-- `no-console` warned, `no-debugger` blocked
-- React hooks rules enforced
-- Prettier formatting applied as an ESLint error
+The test suite uses Jest 30 with `ts-jest`, `jest-environment-jsdom`, and Testing Library. Supertest is wired in for API route integration tests.
 
-### Prettier
+```bash
+npm run test           # run the full suite
+npm run test:watch     # watch mode
+npm run test:coverage  # generate the coverage report
+```
 
-Automatic code formatting on save and on commit:
+Tests live under `__tests__/`. Shared mock data sits under `__tests__/__mocks__/`. The test database lifecycle is managed through `__tests__/jest.globalSetup.ts` and `__tests__/jest.globalTeardown.ts`; per-file matchers (`@testing-library/jest-dom`) are loaded from `__tests__/jest.setup.ts`.
 
-- 2 spaces indentation
-- Semicolons required
-- Double quotes
-- Trailing commas (ES5)
-- Print width: 100 characters
-- Arrow function parentheses always included
-- LF line endings
+## Security Audit
 
-### Husky + lint-staged
-
-Pre-commit hooks that automatically:
-
-- Run ESLint with auto-fix on staged `.ts` and `.tsx` files
-- Format `.ts`, `.tsx`, `.css`, `.json`, and `.md` files with Prettier
-- Block commits with remaining linting errors
-
-## Security
-
-### npm audit
-
-Check for known vulnerabilities in dependencies:
+Before any release, scan the dependency tree for known vulnerabilities:
 
 ```bash
 npm audit
 ```
 
-Fix automatically where possible:
+Apply automatic remediations where possible:
 
 ```bash
 npm audit fix
 ```
 
-### Authentication
+Review any remaining advisories manually and decide whether to upgrade, override, or accept the risk before moving on to [Build](#build).
 
-- Passwords are hashed with `bcryptjs` before being stored — plain text passwords never reach the database.
-- JWT tokens are signed with `jose` using a secret defined in `JWT_SECRET`. Tokens are stored in `HttpOnly` cookies, making them inaccessible to JavaScript in the browser.
-- The `getSession()` helper verifies the token on every request. An invalid or expired token returns `null` — no exceptions propagate to the caller.
-- The `auth-token` cookie is set with `Secure` in production and `SameSite=Lax` to mitigate CSRF attacks.
+## Build
+
+With tests green and the dependency tree clean, produce the optimized production bundle:
+
+```bash
+npm run build
+```
+
+This runs `tsc -p tsconfig.app.json && next build`:
+
+1. **`tsc`** type-checks the project against `tsconfig.app.json` (strict mode). The build aborts on any type error before Next.js touches the code.
+2. **`next build`** produces the optimized App Router bundle under `.next/`. The project is configured for **standalone output**, generating a self-contained `.next/standalone/` directory that includes only the runtime files actually required to serve requests — this is what gets copied into the production image.
+
+The same pipeline is reproduced inside `Dockerfile.production` as a three-stage build:
+
+- **`deps`** — installs packages with `npm ci` against the lockfile.
+- **`builder`** — runs `tsc` + `next build` to produce the standalone output.
+- **`runner`** — copies only the standalone artifact and runs as a non-root user. The final image contains no source code, devDependencies, or build tooling.
+
+To run the locally built output without Docker:
+
+```bash
+npm run start
+```
+
+## Production
+
+Deploying to production assumes the previous sections have already passed: tests green ([Testing](#testing)), no critical advisories ([Security Audit](#security-audit)), and a clean local build ([Build](#build)). This section adds only what is new on top: a `.env` configured with production values, and a Docker stack that wraps the app behind nginx with a managed MongoDB container.
+
+### Dev Docker environment
+
+`dev.docker-compose.yml` is an alternative to the local `npm run dev` flow that bundles MongoDB in a container and runs Next.js with webpack + polling for cross-platform hot reload.
+
+```bash
+docker compose -f dev.docker-compose.yml up --build
+```
+
+The application will be available at `http://localhost:3000`.
+
+> **WSL2 users:** uncomment `WATCHPACK_POLLING=true` in `.env` if hot reload does not pick up file changes.
+
+### Prod Docker stack
+
+The production setup runs three containers orchestrated by `prod.docker-compose.yml`:
+
+| Container           | Image                   | Role                                      |
+| ------------------- | ----------------------- | ----------------------------------------- |
+| `boilerplate-nginx` | `nginx:stable-alpine`   | Reverse proxy, public entry point (8080)  |
+| `boilerplate-app`   | `Dockerfile.production` | Next.js standalone server (internal only) |
+| `boilerplate-db`    | `mongo:7.0`             | MongoDB database (internal only)          |
+
+Only nginx is exposed to the outside world. The app and database containers are internal to the Docker network. The app image itself is documented under [Build](#build).
+
+#### Configure `.env` for production
+
+Production values differ from the local development reference shown in [Env Keys](#env-keys). At minimum override these:
+
+```env
+MONGO_HOST=boilerplate-db        # must match the db service name in docker-compose
+MONGO_PORT=27017
+MONGO_USER=root
+MONGO_PASS=<strong-password>
+MONGO_DB_NAME=boilerplate_db
+MONGO_AUTH_SOURCE=admin
+JWT_SECRET=<long-random-secret>
+NEXT_PUBLIC_APP_URL=https://yourdomain.com
+```
+
+#### Deploy
+
+```bash
+docker compose -f prod.docker-compose.yml up --build -d
+```
+
+The application will be available at `http://localhost:8080` (or your server's IP/domain on port 8080).
+
+#### How the stack behaves
+
+- **`Dockerfile.nginx`** runs as a non-root user (`appuser`). The `user nginx;` directive is removed from the main nginx config so it can bind to port 8080 without root privileges.
+- **nginx** proxies all traffic to the app container. Static assets under `/_next/static/` are cached for 1 year (immutable). Images and fonts are cached for 1 day. HTML responses are never cached.
+- **MongoDB** starts with a health check; the app container waits until the database is ready before starting (`depends_on: condition: service_healthy`).
+- **Data** is persisted in the `mongo-prod-data` named volume — it survives container restarts and rebuilds.
+
+#### Useful commands
+
+```bash
+# View running containers
+docker compose -f prod.docker-compose.yml ps
+
+# Follow logs
+docker compose -f prod.docker-compose.yml logs -f
+
+# Stop all services
+docker compose -f prod.docker-compose.yml down
+
+# Stop and remove volumes (wipes the database)
+docker compose -f prod.docker-compose.yml down -v
+
+# Rebuild after code changes
+docker compose -f prod.docker-compose.yml up --build --force-recreate -d
+```
 
 ## Known Issues
 
 None at the moment.
+
+## Portfolio Link
+
+[`https://www.diegolibonati.com.ar/#/project/next-16-ts-mongo-boilerplate`](https://www.diegolibonati.com.ar/#/project/next-16-ts-mongo-boilerplate)

@@ -7,8 +7,6 @@ import type { JSX } from "react";
 
 import authService from "@/services/authService";
 
-import "@/components/LoginForm/LoginForm.css";
-
 const LoginForm = (): JSX.Element => {
   const [email, setEmail] = useState("alice@example.com");
   const [password, setPassword] = useState("demo1234");

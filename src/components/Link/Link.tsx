@@ -3,8 +3,6 @@ import NextLink from "next/link";
 import type { JSX } from "react";
 import type { LinkProps } from "@/types/props";
 
-import "@/components/Link/Link.css";
-
 const Link = ({
   id,
   href,

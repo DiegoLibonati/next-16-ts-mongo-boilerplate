@@ -7,8 +7,6 @@ import authService from "@/services/authService";
 
 import Action from "@/components/Action/Action";
 
-import "@/components/LogoutButton/LogoutButton.css";
-
 const LogoutButton = (): JSX.Element => {
   const router = useRouter();
 

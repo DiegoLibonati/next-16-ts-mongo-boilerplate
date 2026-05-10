@@ -6,8 +6,6 @@ import { CounterProvider } from "@/contexts/CounterContext/CounterProvider";
 
 import { useCounterContext } from "@/hooks/useCounterContext";
 
-import "@/components/CounterWidget/CounterWidget.css";
-
 const Counter = (): JSX.Element => {
   const { counterState, addCounter, subtractCounter } = useCounterContext();
 

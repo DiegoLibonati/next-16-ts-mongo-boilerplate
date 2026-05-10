@@ -4,7 +4,8 @@
 
 .context-page .title {
   color: var(--color-white);
-  font-size: 5rem;
+  font-size: clamp(2rem, 10vw, 5rem);
+  line-height: 1.1;
 }
 
 .context-page .links {
